@@ -1,0 +1,67 @@
+{
+  "name": "dsh-ofm-codearts-pin",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "把 dsh-our-free-model 钉在 2.5.8（最后一个带华为云 CodeArts 渠道的版本）并在每次启动自愈回滚：逐文件 SHA-256 校验、失败自动还原、升级后自动重打，同时关掉会把华为云删掉的自动更新检查",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./pinner": "./lib/pinner.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "vendor/payload",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh-CN.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "test"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh-our-free-model",
+    "codearts",
+    "huaweicloud",
+    "openpangu",
+    "pin"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    }
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "engines": {
+      "dsh": ">=0.2.0-rc.1"
+    },
+    "compatibility": {
+      "dshReleases": {
+        "0.2.0-rc.2": "compatible",
+        "0.2.1-rc.2": "compatible"
+      }
+    },
+    "install": {
+      "preferred": "tarball",
+      "tarball": "https://github.com/basaltfold/dsh-ofm-codearts-pin/archive/refs/heads/master.tar.gz",
+      "zip": "https://github.com/basaltfold/dsh-ofm-codearts-pin/archive/refs/heads/master.zip",
+      "git": "https://github.com/basaltfold/dsh-ofm-codearts-pin.git"
+    }
+  },
+  "scripts": {
+    "test": "node test/pin.test.mjs",
+    "test:boot": "node test/boot.test.mjs",
+    "test:all": "node test/pin.test.mjs && node test/boot.test.mjs"
+  }
+}

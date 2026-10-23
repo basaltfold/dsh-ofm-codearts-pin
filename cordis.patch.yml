@@ -1,0 +1,33 @@
+# dsh-ofm-codearts-pin bundle patch
+#
+# Mounts the pin into every profile that lists this bundle.
+#
+# ⚠️ ORDER MATTERS. The insert below must land **before** the
+# `dsh-our-free-model` row in the profile's loader tree, because this plugin
+# rewrites `vendor/channel-pack/pack.js` at boot and that file is imported
+# lazily by OFM. If OFM activates first and imports the pack, a pin landing
+# afterwards only takes effect on the next start (the slash command reports
+# `restart required` either way).
+#
+# Bundles activate in `dsh.profile.bundles` order, so list this bundle ahead of
+# `dsh-our-free-model` there. This row is an id-addressed insert: it does not
+# move OFM, it only adds itself.
+#
+# The row `name` MUST equal the bare package name: the client-modules node half
+# resolves `require.resolve('<row-name>/package.json')` to locate the package.
+#
+# Optional entry config (all defaults shown):
+#
+#   config:
+#     autoPin: true        # false = report drift only, never write
+#     target: ''           # explicit dsh-our-free-model directory
+#     quietUpdates: true   # set updateCheckHours = 0 so 2.5.9 is not offered
+#     verbose: false       # log every step, including a no-op boot
+#
+- insert:
+    - id: ofm-codearts-pin
+      name: 'dsh-ofm-codearts-pin'
+      config:
+        autoPin: true
+        quietUpdates: true
+        verbose: false
